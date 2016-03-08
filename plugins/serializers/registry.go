@@ -3,6 +3,7 @@ package serializers
 import (
 	"github.com/influxdata/telegraf"
 
+	"github.com/influxdata/telegraf/plugins/serializers/av_json"
 	"github.com/influxdata/telegraf/plugins/serializers/graphite"
 	"github.com/influxdata/telegraf/plugins/serializers/influx"
 )
@@ -40,6 +41,8 @@ func NewSerializer(config *Config) (Serializer, error) {
 		serializer, err = NewInfluxSerializer()
 	case "graphite":
 		serializer, err = NewGraphiteSerializer(config.Prefix)
+	case "av-json":
+		serializer, err = NewAvJsonSerializer()
 	}
 	return serializer, err
 }
@@ -52,4 +55,8 @@ func NewGraphiteSerializer(prefix string) (Serializer, error) {
 	return &graphite.GraphiteSerializer{
 		Prefix: prefix,
 	}, nil
+}
+
+func NewAvJsonSerializer() (Serializer, error) {
+	return &av_json.AvJsonSerializer{}, nil
 }

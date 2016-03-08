@@ -121,11 +121,13 @@ func (m *MQTT) Write(metrics []telegraf.Metric) error {
 		if m.TopicPrefix != "" {
 			t = append(t, m.TopicPrefix)
 		}
-		if hostname != "" {
-			t = append(t, hostname)
-		}
 
-		t = append(t, metric.Name())
+		// do not append hostname + prefix
+		if hostname != "" {
+			// 	t = append(t, hostname)
+		}
+		// t = append(t, metric.Name())
+
 		topic := strings.Join(t, "/")
 
 		values, err := m.serializer.Serialize(metric)
